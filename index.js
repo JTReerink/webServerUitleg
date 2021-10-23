@@ -4,6 +4,7 @@ const http = require('http');
 const server = http.createServer(app);
 const {Server} = require("socket.io")
 const io = new Server(server);
+const fs = require('fs')
 
 app.use(express.static('public'));
 
@@ -19,9 +20,11 @@ io.on('connection', (socket)=>{
     console.log('nieuwe connect');
     socket.on('chat message', (msg) => {
         console.log('message: ' + msg);
+        io.emit('server response', "message received")
     });
 });
 
-app.listen(3000, ()=>{
+server.listen(3000, ()=>{
     console.log('listening')
 })
+
