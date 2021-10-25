@@ -8,19 +8,26 @@ const fs = require('fs')
 
 app.use(express.static('public'));
 
+//Bij connectie => laad in 'index.html'
 app.get('/',(req,res) =>{
     res.sendFile('index.html')
 })
 
+//bij connectie met .../jaap => laad in (tekst) 'Hallo'
 app.get('/jaap',(req,res) =>{
     res.send('Halloo')
 })
 
+//registreren of er een nieuwe connect is
 io.on('connection', (socket)=>{
     console.log('nieuwe connect');
+    
+    //registreren of er een emit met 'chat message' wordt verzonden vanaf client
     socket.on('chat message', (msg) => {
         console.log('message: ' + msg);
-        io.emit('server response', "message received")
+        
+        //het uitsturen van het bericht naar alle huidige connects
+        io.emit('server response', msg)
     });
 });
 

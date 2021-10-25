@@ -1,6 +1,6 @@
 const socket = io();
 
-var message = document.getElementById('chatBox');
+var message = document.getElementById('input');
 
 let button = document.getElementById('submit');
 
@@ -13,6 +13,9 @@ button.addEventListener('click', (e)=>{
     
 socket.on('server response', (data) => {
     console.log(data);
+    let chatBalloon = document.createElement('li');
+    chatBalloon.innerHTML = data;
+    document.getElementById('messages').appendChild(chatBalloon);
 });
     
     
