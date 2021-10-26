@@ -1,5 +1,5 @@
 body{
-    background-color: aqua;
+    background-color: whitesmoke;
     padding-bottom: 3rem
 }
 
@@ -40,4 +40,8 @@ h1 {
     font-style: italic;
     list-style-type: none;
     font-weight: bold;
+}
+
+#chatBalloon {
+    list-style-type: none;
 }

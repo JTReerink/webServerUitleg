@@ -1,11 +1,12 @@
 const socket = io();
 
-let personName;
+let personName = prompt("Vul hier je naam in");
 
 let message = document.getElementById('input');
 
 let button = document.getElementById('submit');
 
+socket.emit('new connect', personName + " joined the chat");
 
 socket.on('new connect', (newConnect) => {
     let newConnectMessage = document.createElement('li');
@@ -20,7 +21,7 @@ socket.on('new connect', (newConnect) => {
 button.addEventListener('click', (e)=>{
     e.preventDefault();
     if (message.value) {
-        socket.emit('chat message', message.value);
+        socket.emit('chat message', personName + ": " + message.value);
         message.value = "";
     }
 });

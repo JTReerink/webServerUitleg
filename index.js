@@ -21,7 +21,11 @@ app.get('/jaap',(req,res) =>{
 //registreren of er een nieuwe connect is
 io.on('connection', (socket)=>{
     console.log('nieuwe connect');
-    io.emit('new connect', "We have a new arrival");
+    
+    
+    socket.on('new connect', (con) =>{
+        io.emit('new connect', con);
+    })
     
     //registreren of er een emit met 'chat message' wordt verzonden vanaf client
     socket.on('chat message', (msg) => {
