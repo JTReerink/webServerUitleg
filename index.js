@@ -6,6 +6,8 @@ const {Server} = require("socket.io")
 const io = new Server(server);
 const fs = require('fs')
 
+let personID = 1;
+
 app.use(express.static('public'));
 
 //Bij connectie => laad in 'index.html'
@@ -20,10 +22,13 @@ app.get('/jaap',(req,res) =>{
 
 //registreren of er een nieuwe connect is
 io.on('connection', (socket)=>{
-    console.log('nieuwe connect');
-    
-    
-    socket.on('new connect', (con) =>{
+
+    //stuurt direct terug naar de zojuist geconnecte client een nummer
+    io.to(socket.id).emit("personID", personID)
+    personID += 1;
+
+    //registreert of er een emit binnenkomt met personName + bericht
+    socket.on('new connect', (con) => {
         io.emit('new connect', con);
     })
     
