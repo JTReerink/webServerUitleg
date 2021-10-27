@@ -39,6 +39,15 @@ io.on('connection', (socket)=>{
         //het uitsturen van het bericht naar alle huidige connects
         io.emit('server response', msg)
     });
+
+    socket.on('is typing', (data1, data2) => {
+        io.emit('is typing', data1, data2);
+    });
+
+    socket.on('niet typen', (data) => {
+        console.log(data)
+        io.emit('niet typen', data);
+    })
 });
 
 server.listen(3000, ()=>{

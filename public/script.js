@@ -53,12 +53,39 @@ message.addEventListener('input', () => {
     
     if(isTyping === false){
         console.log("is typing");
-        socket.emit('is typing', )
+        socket.emit('is typing', personIDNumber, personName)
         isTyping = true;
+        
     };
+    if(message.value.length < 1) {
+            isTyping = false;
+            stopTypen();
+        }
     
 });
 
 button.addEventListener('click', () => {
     isTyping = false;
+    stopTypen();
 });
+
+function stopTypen() {
+    socket.emit('niet typen', personIDNumber)
+}
+
+socket.on('is typing', (data1, data2) => {
+    //beide data zijn data van andere chatPersoon
+    //data1 = personIDNumber
+    //data2 = personName
+
+    let connectBalloon = document.createElement('li');
+    connectBalloon.setAttribute('id', data1)
+    connectBalloon.innerHTML = data2 + " is typing...";
+    document.getElementById('messages').appendChild(connectBalloon);
+})
+
+socket.on('niet typen', (data) =>{
+    //data = personIDNummer van ander chatPersoon
+    let connectBalloon = document.getElementById(data)
+    connectBalloon.remove()
+})
